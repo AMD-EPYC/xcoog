@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>version0.1</title>
+    <link rel="styleSheet" href="/css/reset.css">
+    <link href="./favicon.ico">
+    <script src="./js/vue.js"></script>
+    <script src="./js/base64.js"></script>
+    <style>
+        div {
+            width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #title {
+            font-weight: bold;
+            font-family: 微软雅黑, 黑体;
+            font-size: 24px;
+            height: 40px;
+            line-height: 40px;
+            padding: 15px 0px;
+            margin-top: 58px;
+        }
+
+        textarea {
+            box-sizing: border-box;
+            resize: none;
+            outline: none;
+            width: 600px;
+
+            padding: 5px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        textarea::placeholder {
+            transition: all 0.3s;
+            color: #999;
+        }
+
+        textarea:focus {
+            border: 1px solid rgb(#a6f3fa);
+            box-shadow: 0px 0px 5px #007eff;
+        }
+
+        textarea:hover::placeholder {
+            color: #c2c2c2;
+        }
+
+        textarea:last-child:hover::placeholder {
+            color: #8ad2d4;
+        }
+
+        #decode {
+            height: 80px;
+        }
+
+        #encode {
+            height: 280px;
+        }
+
+        input {
+            display: block;
+            float: left;
+            font-size: 14px;
+            height: 32px;
+            margin-right: 4px;
+            margin-bottom: 10px;
+        }
+
+        #help {
+            float: right;
+            margin: 0;
+        }
+
+        #author {
+            font-size: 12px;
+        }
+
+        a {
+            color: #437aa5;
+        }
+
+        #end {
+            display: none;
+            margin-top: 250px;
+            font-size: 100px;
+        }
+
+        #hidden {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="window">
+        <div id="title">与佛论禅(仿制版v0.1)</div>
+        <div id="main">
+            <textarea placeholder="听，咸鱼的声音..." id="decode" v-model="decode"></textarea>
+            <input type="button" value="获得爆肝的勇气↓" @click="encrypt">
+            <input type="button" value="参悟咸鱼的真谛↑" @click="decrypt">
+            <input type="button" id="help" value="人生归途" @click="showHelp">
+            <textarea placeholder="镜海迷梦" id="encode" v-model="encode"></textarea>
+            <input type="button" value="点击复制" @click="copy">
+        </div>
+        <div id="author">
+            <div>一条失去灵魂的咸鱼仿制，表示大概不会有人用的</div>
+            <div>主站开发中。。。。ㅤ※ㅤ
+                <a href="https:\\xcoa.tk" target="_blank">新铜矿厂</a>
+            </div>
+            <div id="hidden" onselectstart="return false">
+                <div>匿名反对某站制作闭源新佛曰的垄断行为</div>
+                <div>另外，没有佛曰是因为没肝完。。。目前是base64</div>
+                <div>为什么没看到class只有id？因为getElementById不用遍历</div>
+            </div>
+        </div>
+    </div>
+    <div id="end">四大皆空...</div>
+</body>
+
+
+
+<script>
+
+    new Vue({
+        el: '#main',
+        data: {
+            //原文
+            decode: "",
+            //密文
+            encode: "",
+        },
+        methods: {
+            encrypt() {
+                // 加密
+                this.encode = base64encode(utf16to8(this.decode));
+            },
+            decrypt() {
+                //解密
+                this.decode = utf8to16(base64decode(this.encode));
+            },
+            showHelp() {
+                document.getElementById("window").style.display = "none";
+                document.getElementById("end").style.display = "block";
+            },
+            copy() {
+                
+            }
+        },
+        created() {
+            document.addEventListener("click", e => {
+                var box = document.getElementById("hidden");
+                if (box.contains(e.target)) {
+                    if (box.style.color == "rgb(0, 0, 0)") {
+                        box.style.color = "#fff"
+                    } else {
+                        box.style.color = "#000";
+                    }
+                }
+            })
+        },
+    })
+</script>
+
+</html>
